@@ -71,16 +71,24 @@ export const useLogoProcessor = () => {
   }, [logos, processLogo]);
 
   const removeLogo = useCallback((id: string) => {
-    const logo = logos.find(l => l.id === id);
-    if (logo) {
-      // Limpiar URLs de memoria
-      URL.revokeObjectURL(logo.originalUrl);
-      if (logo.processedUrl) URL.revokeObjectURL(logo.processedUrl);
-      if (logo.whiteVersionUrl) URL.revokeObjectURL(logo.whiteVersionUrl);
-      if (logo.blackVersionUrl) URL.revokeObjectURL(logo.blackVersionUrl);
-    }
-    
-    setLogos(prev => prev.filter(l => l.id !== id));
+    // Marcar como en proceso de eliminación para activar la animación
+    setLogos(prev => prev.map(l => 
+      l.id === id ? { ...l, isRemoving: true } : l
+    ));
+
+    // Después de la animación, remover del estado
+    setTimeout(() => {
+      const logo = logos.find(l => l.id === id);
+      if (logo) {
+        // Limpiar URLs de memoria
+        URL.revokeObjectURL(logo.originalUrl);
+        if (logo.processedUrl) URL.revokeObjectURL(logo.processedUrl);
+        if (logo.whiteVersionUrl) URL.revokeObjectURL(logo.whiteVersionUrl);
+        if (logo.blackVersionUrl) URL.revokeObjectURL(logo.blackVersionUrl);
+      }
+      
+      setLogos(prev => prev.filter(l => l.id !== id));
+    }, 400); // Duración de la animación fadeOutDown
   }, [logos]);
 
   const clearAllLogos = useCallback(() => {

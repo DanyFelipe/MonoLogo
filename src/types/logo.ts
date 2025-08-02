@@ -7,6 +7,7 @@ export interface LogoFile {
   whiteVersionUrl?: string;
   blackVersionUrl?: string;
   status: ProcessingStatus;
+  isRemoving?: boolean;
   createdAt: Date;
 }
 
