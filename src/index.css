@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+:root {
+  /* Variables de fuentes */
+  --font-inter: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  
+  /* Variables de tamaños de texto */
+  --text-xs: 0.75rem;     /* 12px - Etiquetas muy pequeñas */
+  --text-sm: 0.875rem;    /* 14px - Etiquetas pequeñas */
+  --text-base: 1rem;      /* 16px - Texto base, párrafos */
+  --text-lg: 1.125rem;    /* 18px - Texto destacado */
+  --text-xl: 1.25rem;     /* 20px - Subtítulos pequeños */
+  --text-2xl: 1.5rem;     /* 24px - Subtítulos */
+  --text-3xl: 1.875rem;   /* 30px - Títulos h3 */
+  --text-4xl: 2.25rem;    /* 36px - Títulos h2 */
+  --text-5xl: 3rem;       /* 48px - Títulos h1 */
+  --text-6xl: 3.75rem;    /* 60px - Títulos principales */
+  
+  /* Variables de peso de fuente */
+  --font-light: 300;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --font-extrabold: 800;
+  
+  /* Variables de espaciado de línea */
+  --leading-tight: 1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  
+  /* Variables de colores globales */
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-gray: #6b7280;
+  --color-gray-light: #d1d5db;
+  --color-gray-dark: #374151;
+  
+  /* Variables de background */
+  --bg-primary: var(--color-white);
+  --bg-secondary: var(--color-gray-light);
+  --bg-dark: var(--color-black);
+  
+  /* Variable para efecto gloss */
+  --bg-gloss: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.1) 0%, 
+    rgba(255, 255, 255, 0.05) 50%, 
+    transparent 100%);
+}
+
+/* Aplicar fuente Inter globalmente */
+body {
+  font-family: var(--font-inter);
+}
+
+/* Patrón de transparencia para mostrar imágenes con fondo transparente */
+.bg-checkered {
+  background-image: 
+    linear-gradient(45deg, #f0f0f0 25%, transparent 25%),
+    linear-gradient(-45deg, #f0f0f0 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #f0f0f0 75%),
+    linear-gradient(-45deg, transparent 75%, #f0f0f0 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
