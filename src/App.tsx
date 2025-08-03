@@ -62,26 +62,28 @@ function App() {
         {/* Statistics */}
         <div className={`transition-all duration-700 ease-out ${logos.length > 0 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}>
           {logos.length > 0 && (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-              <div className="card-modern p-8 text-center animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-                <div className="text-4xl mb-2" style={{ color: 'var(--color-white)' }}>{logos.length}</div>
-                <div className="text-sm uppercase tracking-wide" style={{ color: 'var(--color-text)' }}>Total</div>
-              </div>
-              <div className="card-modern p-8 text-center animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-                <div className="text-4xl mb-2" style={{ color: 'var(--color-white)' }}>
-                  {logos.filter(l => l.status === 'pending').length}
+            <div className="card-modern px-6 py-1 mb-6 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="p-6 text-center">
+                  <div className="text-4xl mb-2" style={{ color: 'var(--color-white)' }}>{logos.length}</div>
+                  <div className="text-sm uppercase tracking-wide" style={{ color: 'var(--color-text)' }}>Total</div>
                 </div>
-                <div className="text-sm uppercase tracking-wide" style={{ color: 'var(--color-text)' }}>Pendientes</div>
-              </div>
-              <div className="card-modern p-8 text-center animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-                <div className="text-4xl mb-2" style={{ color: 'var(--color-white)' }}>
-                  {logos.filter(l => l.status === 'processing').length}
+                <div className="p-6 text-center">
+                  <div className="text-4xl mb-2" style={{ color: 'var(--color-white)' }}>
+                    {logos.filter(l => l.status === 'pending').length}
+                  </div>
+                  <div className="text-sm uppercase tracking-wide" style={{ color: 'var(--color-text)' }}>Pendientes</div>
                 </div>
-                <div className="text-sm uppercase tracking-wide" style={{ color: 'var(--color-text)' }}>Procesando</div>
-              </div>
-              <div className="card-modern p-8 text-center animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-                <div className="text-4xl mb-2" style={{ color: 'var(--color-white)' }}>{completedLogos.length}</div>
-                <div className="text-sm uppercase tracking-wide" style={{ color: 'var(--color-text)' }}>Completados</div>
+                <div className="p-6 text-center">
+                  <div className="text-4xl mb-2" style={{ color: 'var(--color-white)' }}>
+                    {logos.filter(l => l.status === 'processing').length}
+                  </div>
+                  <div className="text-sm uppercase tracking-wide" style={{ color: 'var(--color-text)' }}>Procesando</div>
+                </div>
+                <div className="p-6 text-center">
+                  <div className="text-4xl mb-2" style={{ color: 'var(--color-white)' }}>{completedLogos.length}</div>
+                  <div className="text-sm uppercase tracking-wide" style={{ color: 'var(--color-text)' }}>Completados</div>
+                </div>
               </div>
             </div>
           )}

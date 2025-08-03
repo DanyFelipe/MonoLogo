@@ -38,6 +38,9 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onFilesSelected, isProce
       
       // Pequeña demora para permitir que todas las validaciones se completen
       setTimeout(() => onFilesSelected(validFiles), 100);
+      
+      // Resetear el valor del input para permitir seleccionar el mismo archivo nuevamente
+      e.target.value = '';
     }
   }, [onFilesSelected, fileValidator]);
 

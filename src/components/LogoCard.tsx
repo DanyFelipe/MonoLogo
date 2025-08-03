@@ -79,74 +79,80 @@ export const LogoCard: React.FC<LogoCardProps> = ({
         {/* Versiones procesadas */}
         {logo.status === 'completed' && logo.processedUrl && (
           <div className="content-slide-down space-y-6">
-            <h4 className="text-sm font-semibold tracking-wide" style={{ color: 'var(--color-white)' }}>Versiones generadas</h4>
+            <h4 className="text-sm font-semibold tracking-wide mt-4 mb-4" style={{ color: 'var(--color-white)' }}>Imágenes para descargar</h4>
             
             <div className="grid grid-cols-3 gap-4">
               {/* Versión transparente */}
               <div className="text-center opacity-0 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-                <div className="aspect-square rounded-xl overflow-hidden mb-3 relative" style={{ backgroundColor: 'var(--color-border)' }}>
+                <div className="aspect-square rounded-xl overflow-hidden mb-3 relative group cursor-pointer" style={{ backgroundColor: 'var(--color-border)' }}>
                   <div className="absolute inset-0 bg-checkered"></div>
                   <img
                     src={logo.processedUrl}
                     alt="Transparente"
-                    className="w-full h-full object-contain relative z-10"
+                    className="w-full h-full object-contain relative z-10 transition-all duration-300 group-hover:blur-sm"
                   />
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
+                    <button
+                      onClick={() => onDownload(logo.id, 'transparent')}
+                      className="p-4 transition-all duration-200 transform hover:scale-110 flex items-center justify-center"
+                      style={{ 
+                        color: 'var(--color-white)'
+                      }}
+                      title="Descargar versión transparente"
+                    >
+                      <HiArrowDownTray className="w-8 h-8" />
+                    </button>
+                  </div>
                 </div>
-                <p className="text-xs mb-2 font-medium" style={{ color: 'var(--color-white)' }}>Transparente</p>
-                <button
-                  onClick={() => onDownload(logo.id, 'transparent')}
-                  className="p-2 transition-all duration-200 transform hover:scale-110 flex items-center justify-center mx-auto rounded-lg"
-                  style={{ minWidth: '2.5rem', minHeight: '2.5rem', color: 'var(--color-white)' }}
-                  onMouseEnter={(e) => e.currentTarget.style.color = 'var(--color-text)'}
-                  onMouseLeave={(e) => e.currentTarget.style.color = 'var(--color-white)'}
-                  title="Descargar versión transparente"
-                >
-                  <HiArrowDownTray className="w-5 h-5" />
-                </button>
+                <p className="text-xs font-medium" style={{ color: 'var(--color-white)' }}>Transparente</p>
               </div>
 
               {/* Versión blanca */}
               <div className="text-center opacity-0 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-                <div className="aspect-square rounded-xl overflow-hidden mb-3" style={{ backgroundColor: 'var(--color-border)' }}>
+                <div className="aspect-square rounded-xl overflow-hidden mb-3 relative group cursor-pointer" style={{ backgroundColor: 'var(--color-border)' }}>
                   <img
                     src={logo.whiteVersionUrl}
                     alt="Blanco"
-                    className="w-full h-full object-contain"
+                    className="w-full h-full object-contain transition-all duration-300 group-hover:blur-sm"
                   />
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
+                    <button
+                      onClick={() => onDownload(logo.id, 'white')}
+                      className="p-4 transition-all duration-200 transform hover:scale-110 flex items-center justify-center"
+                      style={{ 
+                        color: 'var(--color-white)'
+                      }}
+                      title="Descargar versión blanca"
+                    >
+                      <HiArrowDownTray className="w-8 h-8" />
+                    </button>
+                  </div>
                 </div>
-                <p className="text-xs mb-2 font-medium" style={{ color: 'var(--color-white)' }}>Blanco</p>
-                <button
-                  onClick={() => onDownload(logo.id, 'white')}
-                  className="p-2 transition-all duration-200 transform hover:scale-110 flex items-center justify-center mx-auto rounded-lg"
-                  style={{ minWidth: '2.5rem', minHeight: '2.5rem', color: 'var(--color-white)' }}
-                  onMouseEnter={(e) => e.currentTarget.style.color = 'var(--color-text)'}
-                  onMouseLeave={(e) => e.currentTarget.style.color = 'var(--color-white)'}
-                  title="Descargar versión blanca"
-                >
-                  <HiArrowDownTray className="w-5 h-5" />
-                </button>
+                <p className="text-xs font-medium" style={{ color: 'var(--color-white)' }}>Blanco</p>
               </div>
 
               {/* Versión negra */}
               <div className="text-center opacity-0 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-                <div className="aspect-square rounded-xl overflow-hidden mb-3" style={{ backgroundColor: 'var(--color-border)' }}>
+                <div className="aspect-square rounded-xl overflow-hidden mb-3 relative group cursor-pointer" style={{ backgroundColor: 'var(--color-border)' }}>
                   <img
                     src={logo.blackVersionUrl}
                     alt="Negro"
-                    className="w-full h-full object-contain"
+                    className="w-full h-full object-contain transition-all duration-300 group-hover:blur-sm"
                   />
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
+                    <button
+                      onClick={() => onDownload(logo.id, 'black')}
+                      className="p-4 transition-all duration-200 transform hover:scale-110 flex items-center justify-center"
+                      style={{ 
+                        color: 'var(--color-white)'
+                      }}
+                      title="Descargar versión negra"
+                    >
+                      <HiArrowDownTray className="w-8 h-8" />
+                    </button>
+                  </div>
                 </div>
-                <p className="text-xs mb-2 font-medium" style={{ color: 'var(--color-white)' }}>Negro</p>
-                <button
-                  onClick={() => onDownload(logo.id, 'black')}
-                  className="p-2 transition-all duration-200 transform hover:scale-110 flex items-center justify-center mx-auto rounded-lg"
-                  style={{ minWidth: '2.5rem', minHeight: '2.5rem', color: 'var(--color-white)' }}
-                  onMouseEnter={(e) => e.currentTarget.style.color = 'var(--color-text)'}
-                  onMouseLeave={(e) => e.currentTarget.style.color = 'var(--color-white)'}
-                  title="Descargar versión negra"
-                >
-                  <HiArrowDownTray className="w-5 h-5" />
-                </button>
+                <p className="text-xs font-medium" style={{ color: 'var(--color-white)' }}>Negro</p>
               </div>
             </div>
           </div>
