@@ -184,7 +184,7 @@ export const LogoCard: React.FC<LogoCardProps> = ({
             )}
             
             {logo.status === 'processing' && (
-              <div className="flex-1 px-6 py-3 rounded-xl text-center font-semibold text-sm" style={{ backgroundColor: 'var(--color-border)', color: 'var(--color-bg)' }}>
+              <div className="flex-1 px-6 py-3 rounded-xl text-center font-semibold text-sm" style={{ backgroundColor: 'var(--color-border)', color: 'var(--color-white)' }}>
                 <div className="flex items-center justify-center">
                   <HiArrowPath className="w-5 h-5 animate-spin mr-2" />
                   Procesando...
