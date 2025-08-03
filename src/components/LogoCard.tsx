@@ -159,61 +159,63 @@ export const LogoCard: React.FC<LogoCardProps> = ({
         )}
       </div>
 
-      {/* Acciones */}
-      <div className="p-6 pt-0">
-        <div className="flex gap-3">
-          {logo.status === 'pending' && (
-            <button
-              onClick={() => onProcess(logo.id)}
-              className="flex-1 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200"
-              style={{ 
-                backgroundColor: 'var(--color-bg)',
-                color: 'var(--color-white)',
-                border: '1px solid var(--color-border)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'var(--color-border)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'var(--color-bg)';
-              }}
-            >
-              Procesar
-            </button>
-          )}
-          
-          {logo.status === 'processing' && (
-            <div className="flex-1 px-6 py-3 rounded-xl text-center font-semibold text-sm" style={{ backgroundColor: 'var(--color-border)', color: 'var(--color-bg)' }}>
-              <div className="flex items-center justify-center">
-                <HiArrowPath className="w-5 h-5 animate-spin mr-2" />
-                Procesando...
+      {/* Acciones - Solo mostrar si hay botones que mostrar */}
+      {(logo.status === 'pending' || logo.status === 'processing' || logo.status === 'error') && (
+        <div className="p-6 pt-0">
+          <div className="flex gap-3">
+            {logo.status === 'pending' && (
+              <button
+                onClick={() => onProcess(logo.id)}
+                className="flex-1 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200"
+                style={{ 
+                  backgroundColor: 'var(--color-bg)',
+                  color: 'var(--color-white)',
+                  border: '1px solid var(--color-border)'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = 'var(--color-border)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'var(--color-bg)';
+                }}
+              >
+                Procesar
+              </button>
+            )}
+            
+            {logo.status === 'processing' && (
+              <div className="flex-1 px-6 py-3 rounded-xl text-center font-semibold text-sm" style={{ backgroundColor: 'var(--color-border)', color: 'var(--color-bg)' }}>
+                <div className="flex items-center justify-center">
+                  <HiArrowPath className="w-5 h-5 animate-spin mr-2" />
+                  Procesando...
+                </div>
               </div>
-            </div>
-          )}
-          
-          {logo.status === 'error' && (
-            <button
-              onClick={() => onProcess(logo.id)}
-              className="flex-1 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200"
-              style={{ 
-                backgroundColor: 'var(--color-border)',
-                color: 'var(--color-bg)',
-                border: '1px solid var(--color-border)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'var(--color-text)';
-                e.currentTarget.style.color = 'var(--color-bg)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'var(--color-border)';
-                e.currentTarget.style.color = 'var(--color-bg)';
-              }}
-            >
-              Reintentar
-            </button>
-          )}
+            )}
+            
+            {logo.status === 'error' && (
+              <button
+                onClick={() => onProcess(logo.id)}
+                className="flex-1 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200"
+                style={{ 
+                  backgroundColor: 'var(--color-border)',
+                  color: 'var(--color-bg)',
+                  border: '1px solid var(--color-border)'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = 'var(--color-text)';
+                  e.currentTarget.style.color = 'var(--color-bg)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'var(--color-border)';
+                  e.currentTarget.style.color = 'var(--color-bg)';
+                }}
+              >
+                Reintentar
+              </button>
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

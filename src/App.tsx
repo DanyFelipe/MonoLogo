@@ -3,6 +3,7 @@ import { LogoCard } from './components/LogoCard';
 import { GridBackgroundDemo } from './components/GridBackground';
 import { useLogoProcessor } from './hooks/useLogoProcessor';
 import { HiArrowPath } from 'react-icons/hi2';
+import { FaGithub, FaLinkedin, FaInstagram, FaGlobe } from 'react-icons/fa';
 
 function App() {
   const {
@@ -134,12 +135,71 @@ function App() {
 
       {/* Footer */}
       <footer className="mt-20" style={{ backgroundColor: 'var(--color-bg)', borderTop: '1px solid var(--color-border)' }}>
-        <div className="max-w-6xl mx-auto px-6 py-12">
-          <div className="text-center" style={{ color: 'var(--color-text)' }}>
-            <p className="text-lg">MonoLogo</p>
-            <p className="mt-2">
-              Diseñado con ❤️ siguiendo principios de diseño moderno
-            </p>
+        <div className="max-w-7xl mx-auto px-8 py-12">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+            {/* Logo/Brand */}
+            <div>
+              <h2 className="text-3xl font-bold" style={{ color: 'var(--color-white)' }}>
+                MonoLogo
+              </h2>
+            </div>
+            
+            {/* Creator Info & Social Links */}
+            <div className="text-right">
+              <p className="text-lg mb-1" style={{ color: 'var(--color-text)' }}>
+                Creado por: <span style={{ color: 'var(--color-white)' }}>Daniel Felipe</span>
+              </p>
+              <div className="flex justify-end gap-4">
+                <a
+                  href="https://danielfelipe.dev" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 transition-colors duration-200"
+                  style={{ color: 'var(--color-text)' }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = 'var(--color-white)'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = 'var(--color-text)'}
+                  title="Sitio Web"
+                >
+                  <FaGlobe className="w-6 h-6" />
+                </a>
+                <a
+                  href="https://github.com/DanyFelipe" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 transition-colors duration-200"
+                  style={{ color: 'var(--color-text)' }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = 'var(--color-white)'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = 'var(--color-text)'}
+                  title="GitHub"
+                >
+                  <FaGithub className="w-6 h-6" />
+                </a>
+                <a
+                  href="https://linkedin.com/in/danyfelipe" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 transition-colors duration-200"
+                  style={{ color: 'var(--color-text)' }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = 'var(--color-white)'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = 'var(--color-text)'}
+                  title="LinkedIn"
+                >
+                  <FaLinkedin className="w-6 h-6" />
+                </a>
+                <a
+                  href="https://instagram.com/danylfelipe" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 transition-colors duration-200"
+                  style={{ color: 'var(--color-text)' }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = 'var(--color-white)'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = 'var(--color-text)'}
+                  title="Instagram"
+                >
+                  <FaInstagram className="w-6 h-6" />
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </footer>
