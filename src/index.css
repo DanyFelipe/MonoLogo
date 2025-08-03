@@ -1,105 +1,77 @@
 @import "tailwindcss";
 
+/* 🎨 CAMBIA SOLO ESTOS 10 COLORES PARA TODA LA APP */
 :root {
-  /* Variables de fuentes */
-  --font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --color-bg: #000000;       /* Negro - Fondos */
+  --color-text: #999999;     /* Gris - Texto principal */
+  --color-white: #ffffff;    /* Blanco */
+  --color-border: #333333;   /* Gris oscuro - Bordes */
+  --color-hover: #e4e4e4;    /* Gris medio - Hover */
+  --color-bg-grid: #2b2b2b;  /* Gris muy oscuro - Grid background */
   
-  /* Variables de tamaños de texto */
-  --text-xs: 0.75rem;     /* 12px */
-  --text-sm: 0.875rem;    /* 14px */
-  --text-base: 1rem;      /* 16px */
-  --text-lg: 1.125rem;    /* 18px */
-  --text-xl: 1.25rem;     /* 20px */
-  --text-2xl: 1.5rem;     /* 24px */
-  --text-3xl: 1.875rem;   /* 30px */
-  --text-4xl: 2.25rem;    /* 36px */
-  --text-5xl: 3rem;       /* 48px */
-  --text-6xl: 3.75rem;    /* 60px */
-  
-  /* Variables de peso de fuente */
-  --font-light: 300;
-  --font-normal: 400;
-  --font-medium: 500;
-  --font-semibold: 600;
-  --font-bold: 700;
-  --font-extrabold: 800;
-  
-  /* Variables de espaciado de línea */
-  --leading-tight: 1.25;
-  --leading-normal: 1.5;
-  --leading-relaxed: 1.625;
-  
-  /* Variables de colores */
-  --primary: #007AFF;
-  --primary-dark: #0056CC;
-  --danger: #FF3B30;
-  --danger-dark: #D70015;
-  --success: #34C759;
-  --warning: #FF9500;
-  --purple: #AF52DE;
-  --gray: #8E8E93;
-  --gray-light: #F2F2F7;
-  --gray-medium: #D1D1D6;
-  --text-primary: #1C1C1E;
-  --white: #FFFFFF;
-  
-  /* Variables de background */
-  --bg-primary: var(--white);
-  --bg-secondary: var(--gray-light);
-  --bg-dark: var(--text-primary);
-  
-  /* Variables de sombras */
-  --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.15);
+  /* Estados de procesamiento */
+  --color-pending: #fbbf24;   /* Amarillo - Pendiente */
+  --color-processing: #3b82f6; /* Azul - Procesando */
+  --color-completed: #10b981;  /* Verde - Completado */
+  --color-error: #ef4444;     /* Rojo - Error */
 }
 
-/* Aplicar fuente globalmente */
+/* 📝 Fuente global */
 body {
-  font-family: var(--font-primary);
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Patrón de transparencia para mostrar imágenes con fondo transparente */
+/* 🎨 Patrón de transparencia */
 .bg-checkered {
   background-image: 
-    linear-gradient(45deg, #f0f0f0 25%, transparent 25%),
-    linear-gradient(-45deg, #f0f0f0 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, #f0f0f0 75%),
-    linear-gradient(-45deg, transparent 75%, #f0f0f0 75%);
+    linear-gradient(45deg, var(--color-border) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--color-border) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--color-border) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--color-border) 75%);
   background-size: 20px 20px;
   background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
 }
 
-/* Botones estilo moderno */
-.btn-modern {
-  border-radius: 12px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  backdrop-filter: blur(20px);
-  cursor: pointer;
-}
-
-.btn-modern:active {
-  transform: scale(0.98);
-}
-
-/* Todos los botones deben tener cursor pointer */
+/* 🔘 Botones */
 button {
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 button:disabled {
   cursor: not-allowed;
+  opacity: 0.5;
 }
 
-/* Cards estilo moderno */
+/* Botón de upload específico */
+.upload-button {
+  position: relative;
+  z-index: 10;
+}
+
+.upload-button:hover {
+  background-color: var(--color-hover) !important;
+}
+
+/* Contenedor de upload */
+.upload-container:hover {
+  border-color: var(--color-white) !important;
+}
+
+/* Cuando se hace hover en el botón, evita el hover del contenedor */
+.upload-container:has(.upload-button:hover) {
+  border-color: var(--color-text) !important;
+}
+
+/* 📦 Cards */
 .card-modern {
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
   border-radius: 16px;
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s ease;
 }
 
 /* Animación de expansión para cards */

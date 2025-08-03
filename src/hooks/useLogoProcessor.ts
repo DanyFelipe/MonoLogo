@@ -32,14 +32,21 @@ export const useLogoProcessor = () => {
   }, []);
 
   const processLogo = useCallback(async (id: string) => {
-    const logo = logos.find(l => l.id === id);
-    if (!logo) return;
-
-    setLogos(prev => prev.map(l => 
-      l.id === id ? { ...l, status: 'processing' as ProcessingStatus } : l
-    ));
+    setLogos(prev => {
+      const logo = prev.find(l => l.id === id);
+      if (!logo) return prev;
+      
+      return prev.map(l => 
+        l.id === id ? { ...l, status: 'processing' as ProcessingStatus } : l
+      );
+    });
 
     try {
+      // Obtener el archivo del logo actual
+      const currentLogos = logos;
+      const logo = currentLogos.find(l => l.id === id);
+      if (!logo) return;
+      
       const result = await logoProcessor.processLogo(logo.originalFile);
       
       setLogos(prev => prev.map(l => 
@@ -57,18 +64,27 @@ export const useLogoProcessor = () => {
         l.id === id ? { ...l, status: 'error' as ProcessingStatus } : l
       ));
     }
-  }, [logos, logoProcessor]);
+  }, [logoProcessor]);
 
   const processAllLogos = useCallback(async () => {
     setIsProcessing(true);
-    const pendingLogos = logos.filter(l => l.status === 'pending');
     
-    for (const logo of pendingLogos) {
-      await processLogo(logo.id);
-    }
-    
-    setIsProcessing(false);
-  }, [logos, processLogo]);
+    // Usar una función que obtenga el estado actual
+    setLogos(prev => {
+      const pendingLogos = prev.filter(l => l.status === 'pending');
+      
+      // Procesar logos de forma asíncrona pero secuencial
+      const processSequentially = async () => {
+        for (const logo of pendingLogos) {
+          await processLogo(logo.id);
+        }
+        setIsProcessing(false);
+      };
+      
+      processSequentially();
+      return prev;
+    });
+  }, [processLogo]);
 
   const removeLogo = useCallback((id: string) => {
     // Marcar como en proceso de eliminación para activar la animación
@@ -78,58 +94,66 @@ export const useLogoProcessor = () => {
 
     // Después de la animación, remover del estado
     setTimeout(() => {
-      const logo = logos.find(l => l.id === id);
-      if (logo) {
-        // Limpiar URLs de memoria
+      setLogos(prev => {
+        const logo = prev.find(l => l.id === id);
+        if (logo) {
+          // Limpiar URLs de memoria
+          URL.revokeObjectURL(logo.originalUrl);
+          if (logo.processedUrl) URL.revokeObjectURL(logo.processedUrl);
+          if (logo.whiteVersionUrl) URL.revokeObjectURL(logo.whiteVersionUrl);
+          if (logo.blackVersionUrl) URL.revokeObjectURL(logo.blackVersionUrl);
+        }
+        
+        return prev.filter(l => l.id !== id);
+      });
+    }, 400); // Duración de la animación fadeOutDown
+  }, []);
+
+  const clearAllLogos = useCallback(() => {
+    // Limpiar todas las URLs de memoria usando el estado actual
+    setLogos(prev => {
+      prev.forEach(logo => {
         URL.revokeObjectURL(logo.originalUrl);
         if (logo.processedUrl) URL.revokeObjectURL(logo.processedUrl);
         if (logo.whiteVersionUrl) URL.revokeObjectURL(logo.whiteVersionUrl);
         if (logo.blackVersionUrl) URL.revokeObjectURL(logo.blackVersionUrl);
-      }
+      });
       
-      setLogos(prev => prev.filter(l => l.id !== id));
-    }, 400); // Duración de la animación fadeOutDown
-  }, [logos]);
-
-  const clearAllLogos = useCallback(() => {
-    // Limpiar todas las URLs de memoria
-    logos.forEach(logo => {
-      URL.revokeObjectURL(logo.originalUrl);
-      if (logo.processedUrl) URL.revokeObjectURL(logo.processedUrl);
-      if (logo.whiteVersionUrl) URL.revokeObjectURL(logo.whiteVersionUrl);
-      if (logo.blackVersionUrl) URL.revokeObjectURL(logo.blackVersionUrl);
+      return [];
     });
-    
-    setLogos([]);
-  }, [logos]);
+  }, []);
 
   const downloadLogo = useCallback(async (id: string, version: 'transparent' | 'white' | 'black') => {
-    const logo = logos.find(l => l.id === id);
-    if (!logo || logo.status !== 'completed') return;
+    // Usar el estado actual en lugar de la dependencia
+    setLogos(prev => {
+      const logo = prev.find(l => l.id === id);
+      if (!logo || logo.status !== 'completed') return prev;
 
-    const fileManager = new FileManager();
-    const baseName = logo.name.replace(/\.[^/.]+$/, '');
-    
-    let url: string;
-    let suffix: string;
-    
-    switch (version) {
-      case 'transparent':
-        url = logo.processedUrl!;
-        suffix = '_transparent.png';
-        break;
-      case 'white':
-        url = logo.whiteVersionUrl!;
-        suffix = '_white.png';
-        break;
-      case 'black':
-        url = logo.blackVersionUrl!;
-        suffix = '_black.png';
-        break;
-    }
-    
-    await fileManager.downloadFile(url, `${baseName}${suffix}`);
-  }, [logos]);
+      const fileManager = new FileManager();
+      const baseName = logo.name.replace(/\.[^/.]+$/, '');
+      
+      let url: string;
+      let suffix: string;
+      
+      switch (version) {
+        case 'transparent':
+          url = logo.processedUrl!;
+          suffix = '_transparent.png';
+          break;
+        case 'white':
+          url = logo.whiteVersionUrl!;
+          suffix = '_white.png';
+          break;
+        case 'black':
+          url = logo.blackVersionUrl!;
+          suffix = '_black.png';
+          break;
+      }
+      
+      fileManager.downloadFile(url, `${baseName}${suffix}`);
+      return prev;
+    });
+  }, []);
 
   return {
     logos,

@@ -1,26 +1,26 @@
 import type { LogoFile } from '../types/logo';
-import { HiTrash, HiArrowDownTray } from 'react-icons/hi2';
+import { HiTrash, HiArrowDownTray, HiArrowPath } from 'react-icons/hi2';
 
 interface LogoCardProps {
   logo: LogoFile;
   onProcess: (id: string) => void;
-  onRemove: (id: string) => void;
+  onDelete: (id: string) => void;
   onDownload: (id: string, version: 'transparent' | 'white' | 'black') => void;
 }
 
 export const LogoCard: React.FC<LogoCardProps> = ({ 
   logo, 
   onProcess, 
-  onRemove, 
+  onDelete, 
   onDownload 
 }) => {
   const getStatusColor = () => {
     switch (logo.status) {
-      case 'pending': return { bg: 'rgba(255, 149, 0, 0.1)', text: 'var(--warning)' };
-      case 'processing': return { bg: 'rgba(0, 122, 255, 0.1)', text: 'var(--primary)' };
-      case 'completed': return { bg: 'rgba(52, 199, 89, 0.1)', text: 'var(--success)' };
-      case 'error': return { bg: 'rgba(255, 59, 48, 0.1)', text: 'var(--danger)' };
-      default: return { bg: 'rgba(142, 142, 147, 0.1)', text: 'var(--gray)' };
+      case 'pending': return { bg: 'rgba(251, 191, 36, 0.15)', text: 'var(--color-pending)' };
+      case 'processing': return { bg: 'rgba(59, 130, 246, 0.15)', text: 'var(--color-processing)' };
+      case 'completed': return { bg: 'rgba(16, 185, 129, 0.15)', text: 'var(--color-completed)' };
+      case 'error': return { bg: 'rgba(239, 68, 68, 0.15)', text: 'var(--color-error)' };
+      default: return { bg: 'var(--color-border)', text: 'var(--color-text)' };
     }
   };
 
@@ -35,11 +35,11 @@ export const LogoCard: React.FC<LogoCardProps> = ({
   };
 
   return (
-    <div className="card-modern card-expand bg-white overflow-hidden" style={{ boxShadow: 'var(--shadow-sm)' }}>
+    <div className="card-modern card-expand overflow-hidden" style={{ boxShadow: 'var(--shadow-sm)' }}>
       {/* Header */}
-      <div className="p-6 border-b border-gray-100">
+      <div className="p-6" style={{ borderBottom: '1px solid var(--color-border)' }}>
         <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold text-gray-900 truncate mr-4 tracking-tight">
+          <h3 className="text-lg font-semibold truncate mr-4 tracking-tight" style={{ color: 'var(--color-white)' }}>
             {logo.name}
           </h3>
           <div className="flex items-center gap-3">
@@ -53,9 +53,11 @@ export const LogoCard: React.FC<LogoCardProps> = ({
               {getStatusText()}
             </span>
             <button
-              onClick={() => onRemove(logo.id)}
-              className="p-2 text-gray-400 hover:text-blue-500 transition-all duration-200 transform hover:scale-110 flex items-center justify-center"
-              style={{ minWidth: '2.5rem', minHeight: '2.5rem' }}
+              onClick={() => onDelete(logo.id)}
+              className="p-2 transition-all duration-200 transform hover:scale-110 flex items-center justify-center"
+              style={{ minWidth: '2.5rem', minHeight: '2.5rem', color: 'var(--color-white)' }}
+              onMouseEnter={(e) => e.currentTarget.style.color = 'var(--color-hover)'}
+              onMouseLeave={(e) => e.currentTarget.style.color = 'var(--color-white)'}
               title="Eliminar"
             >
               <HiTrash className="w-5 h-5" />
@@ -66,7 +68,7 @@ export const LogoCard: React.FC<LogoCardProps> = ({
 
       {/* Imagen original */}
       <div className="p-6">
-        <div className="aspect-square bg-gray-50 rounded-2xl overflow-hidden mb-6">
+        <div className="aspect-square rounded-2xl overflow-hidden" style={{ backgroundColor: 'var(--color-border)' }}>
           <img
             src={logo.originalUrl}
             alt={logo.name}
@@ -77,12 +79,12 @@ export const LogoCard: React.FC<LogoCardProps> = ({
         {/* Versiones procesadas */}
         {logo.status === 'completed' && logo.processedUrl && (
           <div className="content-slide-down space-y-6">
-            <h4 className="text-sm font-semibold text-gray-700 uppercase tracking-wide">Versiones generadas</h4>
+            <h4 className="text-sm font-semibold tracking-wide" style={{ color: 'var(--color-white)' }}>Versiones generadas</h4>
             
             <div className="grid grid-cols-3 gap-4">
               {/* Versión transparente */}
               <div className="text-center opacity-0 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-                <div className="aspect-square bg-gray-50 rounded-xl overflow-hidden mb-3 relative">
+                <div className="aspect-square rounded-xl overflow-hidden mb-3 relative" style={{ backgroundColor: 'var(--color-border)' }}>
                   <div className="absolute inset-0 bg-checkered"></div>
                   <img
                     src={logo.processedUrl}
@@ -90,11 +92,13 @@ export const LogoCard: React.FC<LogoCardProps> = ({
                     className="w-full h-full object-contain relative z-10"
                   />
                 </div>
-                <p className="text-xs text-gray-600 mb-2 font-medium">Transparente</p>
+                <p className="text-xs mb-2 font-medium" style={{ color: 'var(--color-white)' }}>Transparente</p>
                 <button
                   onClick={() => onDownload(logo.id, 'transparent')}
-                  className="p-2 text-gray-400 hover:text-blue-500 transition-all duration-200 transform hover:scale-110 flex items-center justify-center mx-auto rounded-lg"
-                  style={{ minWidth: '2.5rem', minHeight: '2.5rem' }}
+                  className="p-2 transition-all duration-200 transform hover:scale-110 flex items-center justify-center mx-auto rounded-lg"
+                  style={{ minWidth: '2.5rem', minHeight: '2.5rem', color: 'var(--color-white)' }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = 'var(--color-text)'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = 'var(--color-white)'}
                   title="Descargar versión transparente"
                 >
                   <HiArrowDownTray className="w-5 h-5" />
@@ -103,18 +107,20 @@ export const LogoCard: React.FC<LogoCardProps> = ({
 
               {/* Versión blanca */}
               <div className="text-center opacity-0 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-                <div className="aspect-square bg-gray-50 rounded-xl overflow-hidden mb-3">
+                <div className="aspect-square rounded-xl overflow-hidden mb-3" style={{ backgroundColor: 'var(--color-border)' }}>
                   <img
                     src={logo.whiteVersionUrl}
                     alt="Blanco"
                     className="w-full h-full object-contain"
                   />
                 </div>
-                <p className="text-xs text-gray-600 mb-2 font-medium">Blanco</p>
+                <p className="text-xs mb-2 font-medium" style={{ color: 'var(--color-white)' }}>Blanco</p>
                 <button
                   onClick={() => onDownload(logo.id, 'white')}
-                  className="p-2 text-gray-400 hover:text-blue-500 transition-all duration-200 transform hover:scale-110 flex items-center justify-center mx-auto rounded-lg"
-                  style={{ minWidth: '2.5rem', minHeight: '2.5rem' }}
+                  className="p-2 transition-all duration-200 transform hover:scale-110 flex items-center justify-center mx-auto rounded-lg"
+                  style={{ minWidth: '2.5rem', minHeight: '2.5rem', color: 'var(--color-white)' }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = 'var(--color-text)'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = 'var(--color-white)'}
                   title="Descargar versión blanca"
                 >
                   <HiArrowDownTray className="w-5 h-5" />
@@ -123,18 +129,20 @@ export const LogoCard: React.FC<LogoCardProps> = ({
 
               {/* Versión negra */}
               <div className="text-center opacity-0 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-                <div className="aspect-square bg-gray-50 rounded-xl overflow-hidden mb-3">
+                <div className="aspect-square rounded-xl overflow-hidden mb-3" style={{ backgroundColor: 'var(--color-border)' }}>
                   <img
                     src={logo.blackVersionUrl}
                     alt="Negro"
                     className="w-full h-full object-contain"
                   />
                 </div>
-                <p className="text-xs text-gray-600 mb-2 font-medium">Negro</p>
+                <p className="text-xs mb-2 font-medium" style={{ color: 'var(--color-white)' }}>Negro</p>
                 <button
                   onClick={() => onDownload(logo.id, 'black')}
-                  className="p-2 text-gray-400 hover:text-blue-500 transition-all duration-200 transform hover:scale-110 flex items-center justify-center mx-auto rounded-lg"
-                  style={{ minWidth: '2.5rem', minHeight: '2.5rem' }}
+                  className="p-2 transition-all duration-200 transform hover:scale-110 flex items-center justify-center mx-auto rounded-lg"
+                  style={{ minWidth: '2.5rem', minHeight: '2.5rem', color: 'var(--color-white)' }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = 'var(--color-text)'}
+                  onMouseLeave={(e) => e.currentTarget.style.color = 'var(--color-white)'}
                   title="Descargar versión negra"
                 >
                   <HiArrowDownTray className="w-5 h-5" />
@@ -146,27 +154,32 @@ export const LogoCard: React.FC<LogoCardProps> = ({
       </div>
 
       {/* Acciones */}
-      <div className="p-6 border-t border-gray-100" style={{ backgroundColor: 'var(--gray-light)' }}>
+      <div className="p-6 pt-0">
         <div className="flex gap-3">
           {logo.status === 'pending' && (
             <button
               onClick={() => onProcess(logo.id)}
-              className="btn-modern flex-1 px-4 py-3 text-white font-semibold"
-              style={{ backgroundColor: 'var(--primary)' }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--primary-dark)'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--primary)'}
+              className="flex-1 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200"
+              style={{ 
+                backgroundColor: 'var(--color-bg)',
+                color: 'var(--color-white)',
+                border: '1px solid var(--color-border)'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = 'var(--color-border)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'var(--color-bg)';
+              }}
             >
               Procesar
             </button>
           )}
           
           {logo.status === 'processing' && (
-            <div className="flex-1 px-4 py-3 bg-gray-300 text-gray-600 font-semibold rounded-xl text-center">
+            <div className="flex-1 px-6 py-3 rounded-xl text-center font-semibold text-sm" style={{ backgroundColor: 'var(--color-border)', color: 'var(--color-bg)' }}>
               <div className="flex items-center justify-center">
-                <svg className="animate-spin -ml-1 mr-3 h-4 w-4 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
+                <HiArrowPath className="w-5 h-5 animate-spin mr-2" />
                 Procesando...
               </div>
             </div>
@@ -175,10 +188,20 @@ export const LogoCard: React.FC<LogoCardProps> = ({
           {logo.status === 'error' && (
             <button
               onClick={() => onProcess(logo.id)}
-              className="btn-modern flex-1 px-4 py-3 text-white font-semibold"
-              style={{ backgroundColor: 'var(--warning)' }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--warning)'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--warning)'}
+              className="flex-1 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200"
+              style={{ 
+                backgroundColor: 'var(--color-border)',
+                color: 'var(--color-bg)',
+                border: '1px solid var(--color-border)'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = 'var(--color-text)';
+                e.currentTarget.style.color = 'var(--color-bg)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'var(--color-border)';
+                e.currentTarget.style.color = 'var(--color-bg)';
+              }}
             >
               Reintentar
             </button>

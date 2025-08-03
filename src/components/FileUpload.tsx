@@ -56,15 +56,17 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onFilesSelected, isProce
     <div className="w-full">
       <div
         className={`
-          card-modern relative border-2 border-dashed p-16 text-center transition-all duration-300
+          upload-container relative border-2 border-dashed p-16 text-center transition-all duration-300 rounded-2xl
           ${isProcessing 
-            ? 'border-gray-300 bg-gray-50 cursor-not-allowed' 
-            : 'border-blue-300 bg-white hover:border-blue-400 cursor-pointer'
+            ? 'cursor-not-allowed' 
+            : 'cursor-pointer'
           }
         `}
         style={{ 
-          borderRadius: '20px',
-          boxShadow: isProcessing ? 'none' : 'var(--shadow-sm)',
+          backgroundColor: 'var(--color-bg)',
+          borderColor: isProcessing ? 'var(--color-border)' : 'var(--color-text)',
+          borderStyle: 'dashed',
+          borderWidth: '2px'
         }}
         onDrop={handleDrop}
         onDragOver={preventDefaults}
@@ -84,12 +86,12 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onFilesSelected, isProce
         <div className="space-y-6">
           <div className="flex justify-center">
             <div 
-              className={`w-20 h-20 rounded-full flex items-center justify-center ${isProcessing ? 'bg-gray-200' : 'bg-blue-50'}`}
-              style={{ backgroundColor: isProcessing ? 'var(--gray-light)' : 'rgba(0, 122, 255, 0.1)' }}
+              className="w-20 h-20 rounded-full flex items-center justify-center"
+              style={{ backgroundColor: isProcessing ? 'var(--color-border)' : 'rgba(255, 255, 255, 0.1)' }}
             >
               <svg 
-                className={`w-10 h-10 ${isProcessing ? 'text-gray-400' : 'text-blue-500'}`}
-                style={{ color: isProcessing ? 'var(--gray)' : 'var(--primary)' }}
+                className="w-10 h-10"
+                style={{ color: isProcessing ? 'var(--color-bg)' : 'var(--color-white)' }}
                 fill="none" 
                 stroke="currentColor" 
                 viewBox="0 0 24 24"
@@ -105,18 +107,18 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onFilesSelected, isProce
           </div>
           
           <div>
-            <h3 className={`text-3xl font-semibold mb-3 tracking-tight ${isProcessing ? 'text-gray-500' : 'text-gray-900'}`}>
+            <h3 className="text-3xl font-semibold mb-3 tracking-tight" style={{ color: isProcessing ? 'var(--color-border)' : 'var(--color-white)' }}>
               {isProcessing ? 'Procesando...' : 'Arrastra tus logos aquí'}
             </h3>
-            <p className={`text-xl ${isProcessing ? 'text-gray-400' : 'text-gray-600'}`}>
+            <p className="text-xl" style={{ color: 'var(--color-text)' }}>
               {isProcessing 
                 ? 'Por favor espera mientras procesamos tus imágenes'
-                : 'o haz clic para seleccionar archivos desde tu Mac'
+                : 'o haz clic para seleccionar archivos desde tu ordenador'
               }
             </p>
           </div>
           
-          <div className="text-sm text-gray-500 space-y-2">
+          <div className="text-sm space-y-2" style={{ color: 'var(--color-text)' }}>
             <p>Formatos soportados: PNG, JPG, JPEG, WEBP</p>
             <p>Tamaño máximo: {fileValidator.getMaxFileSize() / (1024 * 1024)}MB por archivo</p>
           </div>
@@ -125,10 +127,12 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onFilesSelected, isProce
             <button
               type="button"
               onClick={handleButtonClick}
-              className="btn-modern inline-flex items-center px-8 py-4 text-white font-semibold text-lg shadow-lg"
-              style={{ backgroundColor: 'var(--primary)' }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--primary-dark)'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--primary)'}
+              className="inline-flex items-center px-8 py-4 font-semibold text-lg rounded-xl transition-all duration-200 upload-button"
+              style={{ 
+                backgroundColor: 'var(--color-white)', 
+                color: 'var(--color-bg)',
+                border: 'none'
+              }}
             >
               <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
